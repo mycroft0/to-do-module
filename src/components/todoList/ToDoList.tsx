@@ -180,7 +180,9 @@ const TodoApp: React.FC = () => {
                   labelId="sort-by-label"
                   value={sortBy}
                   label="Sort By"
-                  onChange={(e) => setSortBy(e.target.value as "name" | "createdAt")}
+                  onChange={(e) =>
+                    setSortBy(e.target.value as "name" | "createdAt")
+                  }
                 >
                   <MenuItem value="createdAt">Creation Date</MenuItem>
                   <MenuItem value="name">Name</MenuItem>
@@ -193,7 +195,9 @@ const TodoApp: React.FC = () => {
                   labelId="sort-order-label"
                   value={sortOrder}
                   label="Order"
-                  onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
+                  onChange={(e) =>
+                    setSortOrder(e.target.value as "asc" | "desc")
+                  }
                 >
                   <MenuItem value="asc">Ascending</MenuItem>
                   <MenuItem value="desc">Descending</MenuItem>
