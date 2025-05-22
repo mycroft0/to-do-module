@@ -12,6 +12,14 @@ A simple, user-friendly To-Do List application built with **React**, **TypeScrip
 - 📦 Pagination for large to-do lists
 - 🧪 Unit-tested using Jest and React Testing Library
 
+## 🏗️ Architecture & Technologies
+
+- ⚛️ **Component-Based**: Built with React for reusable UI parts
+- 🧠 **State & Logic**: Managed using React hooks & custom hook (useToDoList)
+- 💾 **Data Persistence**: Todos saved per user in localStorage
+- 🔀 **Routing**: React Router for page navigation (login/logout)
+- 🧪 **Testing**: Jest + React Testing Library for reliable tests
+
 ## 📦 Tech Stack
 
 - ⚛️ **React** – Frontend UI library
@@ -21,7 +29,7 @@ A simple, user-friendly To-Do List application built with **React**, **TypeScrip
 - 🧪 **Jest** – JavaScript testing framework
 - 🔬 **React Testing Library** – Testing utilities for React components
 
-## 🚀 Getting Started
+## 🎬 Getting Started
 
 ```bash
 git clone https://github.com/your-username/to-do-project.git
