@@ -8,7 +8,7 @@ A simple, user-friendly To-Do List application built with **React**, **TypeScrip
 - 🔍 Filter (Active / Completed)
 - 🔎 Search functionality
 - 👥 Login-based localStorage data saving
-- 🔐 Logout clears session but retains saved data
+- 🔐 Logout clears the session but retains saved data
 - 📦 Pagination for large to-do lists
 - 🧪 Unit-tested using Jest and React Testing Library
 
@@ -23,30 +23,29 @@ A simple, user-friendly To-Do List application built with **React**, **TypeScrip
 
 ## 🚀 Getting Started
 
-### 1. Clone the Repo
-
 ```bash
 git clone https://github.com/your-username/to-do-project.git
 cd to-do-project
+```
 
-⚙️ Getting Started
+## 📦 Install Dependencies
 
-
-📦 Install Dependencies
-
+```bash
 npm install
+```
 
 
-🚀 Run the App
+## 🚀 Run the App
 
+```bash
 npm start
-app will be available at: http://localhost:3000
+```
+app will be available at: [localhost:3000](http://localhost:3000)
 
-🧪 Run Tests
+## 🧪 Run Tests
 
-npm test
 Runs unit tests using Jest and React Testing Library.
 
-
-
+```bash
+npm test
 ```
