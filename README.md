@@ -29,7 +29,7 @@ A simple, user-friendly To-Do List application built with **React**, **TypeScrip
 - 🧪 **Jest** – JavaScript testing framework
 - 🔬 **React Testing Library** – Testing utilities for React components
 
-## 🚀 Getting Started
+## 🎬 Getting Started
 
 ```bash
 git clone https://github.com/your-username/to-do-project.git
