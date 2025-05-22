@@ -15,6 +15,10 @@ import {
   Typography,
   Paper,
   Container,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -41,6 +45,10 @@ const TodoApp: React.FC = () => {
     page,
     handleLogout,
     currentUser,
+    sortBy,
+    setSortBy,
+    sortOrder,
+    setSortOrder,
   } = useToDoList();
 
   return (
@@ -53,7 +61,6 @@ const TodoApp: React.FC = () => {
         overflow: "hidden",
       }}
     >
-      {/* Video Background */}
       <video
         autoPlay
         muted
@@ -75,7 +82,7 @@ const TodoApp: React.FC = () => {
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "rgba(50, 53, 62, 0.85)", 
+          backgroundColor: "rgba(50, 53, 62, 0.85)",
           backdropFilter: "blur(8px)",
           boxShadow: "0 2px 8px rgba(0,0,0,0.30)",
           color: "#e0e0e0",
@@ -98,33 +105,13 @@ const TodoApp: React.FC = () => {
               fontWeight: "bold",
               ml: 1,
               "&:hover": {
-                backgroundColor: "rgba(144, 202, 249, 0.30)", 
+                backgroundColor: "rgba(144, 202, 249, 0.30)",
                 borderColor: "#64b5f6",
                 color: "#64b5f6",
               },
             }}
           >
             Logout
-          </Button>
-          <Button
-            color="inherit"
-            variant="outlined"
-            onClick={() => navigate("/")}
-            sx={{
-              borderColor: "#90caf9",
-              color: "#90caf9",
-              borderRadius: "50px",
-              textTransform: "none",
-              fontWeight: "bold",
-              ml: 2,
-              "&:hover": {
-                backgroundColor: "rgba(144, 202, 249, 0.15)",
-                borderColor: "#64b5f6",
-                color: "#64b5f6",
-              },
-            }}
-          >
-            Home
           </Button>
         </Toolbar>
       </AppBar>
@@ -158,7 +145,6 @@ const TodoApp: React.FC = () => {
                 fullWidth
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleAdd()}
-                sx={{ borderRadius: 2 }}
               />
               <Button
                 variant="contained"
@@ -187,6 +173,34 @@ const TodoApp: React.FC = () => {
               sx={{ mb: 2 }}
             />
 
+            <Box display="flex" gap={2} mb={2}>
+              <FormControl fullWidth size="small">
+                <InputLabel id="sort-by-label">Sort By</InputLabel>
+                <Select
+                  labelId="sort-by-label"
+                  value={sortBy}
+                  label="Sort By"
+                  onChange={(e) => setSortBy(e.target.value as "name" | "createdAt")}
+                >
+                  <MenuItem value="createdAt">Creation Date</MenuItem>
+                  <MenuItem value="name">Name</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth size="small">
+                <InputLabel id="sort-order-label">Order</InputLabel>
+                <Select
+                  labelId="sort-order-label"
+                  value={sortOrder}
+                  label="Order"
+                  onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
+                >
+                  <MenuItem value="asc">Ascending</MenuItem>
+                  <MenuItem value="desc">Descending</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+
             <Tabs
               value={filter}
               onChange={(e, val) => {
@@ -194,16 +208,19 @@ const TodoApp: React.FC = () => {
                 setPage(1);
               }}
               centered
-              TabIndicatorProps={{
-                style: {
-                  backgroundColor: filter === "active" ? "#36d1dc" : "#5b86e5",
-                },
-              }}
               sx={{
                 mb: 2,
+                "& .MuiTabs-indicator": {
+                  background: "linear-gradient(to right, #36d1dc, #5b86e5)",
+                  height: "3px",
+                  borderRadius: "2px",
+                },
                 "& .MuiTab-root": {
                   fontWeight: "bold",
                   color: "#1976d2",
+                },
+                "& .Mui-selected": {
+                  color: "#0d47a1",
                 },
               }}
             >

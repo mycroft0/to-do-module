@@ -11,6 +11,8 @@ const useToDoList = () => {
   const [search, setSearch] = useState("");
   const [input, setInput] = useState("");
   const [page, setPage] = useState(1);
+  const [sortBy, setSortBy] = useState<"name" | "createdAt">("createdAt");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   const navigate = useNavigate();
 
@@ -38,6 +40,7 @@ const useToDoList = () => {
       id: Date.now(),
       text: input.trim(),
       completed: false,
+      createdAt: Date.now(),
     };
     setTodos([newTodo, ...todos]);
     setInput("");
@@ -57,15 +60,21 @@ const useToDoList = () => {
   };
 
   const filteredTodos = useMemo(() => {
-    return todos.filter((todo) => {
-      const matchFilter =
-        filter === "active" ? !todo.completed : todo.completed;
-      const matchSearch = todo.text
-        .toLowerCase()
-        .includes(search.toLowerCase());
+    const base = todos.filter((todo) => {
+      const matchFilter = filter === "active" ? !todo.completed : todo.completed;
+      const matchSearch = todo.text.toLowerCase().includes(search.toLowerCase());
       return matchFilter && matchSearch;
     });
-  }, [todos, filter, search]);
+
+    return base.sort((a, b) => {
+      let valA = sortBy === "name" ? a.text.toLowerCase() : a.createdAt || 0;
+      let valB = sortBy === "name" ? b.text.toLowerCase() : b.createdAt || 0;
+
+      if (valA < valB) return sortOrder === "asc" ? -1 : 1;
+      if (valA > valB) return sortOrder === "asc" ? 1 : -1;
+      return 0;
+    });
+  }, [todos, filter, search, sortBy, sortOrder]);
 
   const paginatedTodos = useMemo(() => {
     const start = (page - 1) * ITEMS_PER_PAGE;
@@ -89,6 +98,10 @@ const useToDoList = () => {
     ITEMS_PER_PAGE,
     page,
     currentUser,
+    sortBy,
+    setSortBy,
+    sortOrder,
+    setSortOrder,
   };
 };
 
