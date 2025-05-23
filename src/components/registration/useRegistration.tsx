@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { User } from "../../types/types";
 import {isValidLogin} from '../../helpers/validation'
+import { useNavigate } from "react-router-dom";
+
 
 const useRegistration = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleRegister = () => {
     if (!isValidLogin(login)) {
@@ -38,7 +42,8 @@ const useRegistration = () => {
     setPassword,
     message,
     error,
-    isValidLogin
+    isValidLogin,
+    navigate
   };
 };
 

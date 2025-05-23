@@ -32,7 +32,7 @@ const useToDoList = () => {
     }
   }, [todos, storageKey]);
 
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 4;
 
   const handleAdd = () => {
     if (input.trim() === "") return;

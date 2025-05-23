@@ -23,11 +23,10 @@ import {
 import { Delete } from "@mui/icons-material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import useToDoList from "./useToDoList";
-import { useNavigate } from "react-router-dom";
 import videoBackground from "../../video/videoToDo.mp4";
+import styles from "./styles.module.css";
 
 const TodoApp: React.FC = () => {
-  const navigate = useNavigate();
   const {
     handleAdd,
     handleDelete,
@@ -52,92 +51,36 @@ const TodoApp: React.FC = () => {
   } = useToDoList();
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-      }}
-    >
+    <Box className={styles.containerBox}>
       <video
         autoPlay
         muted
         loop
         playsInline
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          zIndex: -1,
-          filter: "brightness(0.7)",
-        }}
+        className={styles.videoBackground}
         src={videoBackground}
       />
 
-      <AppBar
-        position="static"
-        sx={{
-          backgroundColor: "rgba(50, 53, 62, 0.85)",
-          backdropFilter: "blur(8px)",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.30)",
-          color: "#e0e0e0",
-          zIndex: 1,
-        }}
-      >
+      <AppBar position="static" className={styles.appBar}>
         <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: "bold" }}>
+          <Typography variant="h6" className={styles.toolbarTitle}>
             {currentUser?.login}'s ToDo List
           </Typography>
           <Button
             color="inherit"
             variant="outlined"
             onClick={handleLogout}
-            sx={{
-              borderColor: "#90caf9",
-              color: "#90caf9",
-              borderRadius: "50px",
-              textTransform: "none",
-              fontWeight: "bold",
-              ml: 1,
-              "&:hover": {
-                backgroundColor: "rgba(144, 202, 249, 0.30)",
-                borderColor: "#64b5f6",
-                color: "#64b5f6",
-              },
-            }}
+            className={styles.logoutButton}
           >
             Logout
           </Button>
         </Toolbar>
       </AppBar>
 
-      <Box
-        sx={{
-          flexGrow: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          py: 6,
-          px: 2,
-        }}
-      >
+      <Box className={styles.mainBox}>
         <Container maxWidth="sm" sx={{ zIndex: 1 }}>
-          <Paper
-            elevation={6}
-            sx={{
-              p: 4,
-              borderRadius: 4,
-              backgroundColor: "#ffffffdd",
-              backdropFilter: "blur(6px)",
-              boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.1)",
-            }}
-          >
-            <Box display="flex" gap={2} mb={3}>
+          <Paper elevation={6} className={styles.paperCard}>
+            <Box className={styles.todoInputGroup}>
               <TextField
                 label="New Todo"
                 variant="outlined"
@@ -149,16 +92,7 @@ const TodoApp: React.FC = () => {
               <Button
                 variant="contained"
                 onClick={handleAdd}
-                sx={{
-                  borderRadius: 2,
-                  background: "linear-gradient(to right, #36d1dc, #5b86e5)",
-                  color: "#fff",
-                  fontWeight: "bold",
-                  textTransform: "none",
-                  "&:hover": {
-                    background: "linear-gradient(to right, #5b86e5, #36d1dc)",
-                  },
-                }}
+                className={styles.addButton}
               >
                 Add
               </Button>
@@ -170,10 +104,10 @@ const TodoApp: React.FC = () => {
               fullWidth
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              sx={{ mb: 2 }}
+              className={styles.searchField}
             />
 
-            <Box display="flex" gap={2} mb={2}>
+            <Box className={styles.sortControls}>
               <FormControl fullWidth size="small">
                 <InputLabel id="sort-by-label">Sort By</InputLabel>
                 <Select
@@ -212,36 +146,29 @@ const TodoApp: React.FC = () => {
                 setPage(1);
               }}
               centered
-              sx={{
-                mb: 2,
-                "& .MuiTabs-indicator": {
-                  background: "linear-gradient(to right, #36d1dc, #5b86e5)",
-                  height: "3px",
-                  borderRadius: "2px",
-                },
-                "& .MuiTab-root": {
-                  fontWeight: "bold",
-                  color: "#1976d2",
-                },
-                "& .Mui-selected": {
-                  color: "#0d47a1",
-                },
+              className={styles.tabsRoot}
+              classes={{
+                indicator: styles.tabsIndicator,
               }}
             >
-              <Tab label="Active" value="active" />
-              <Tab label="Completed" value="completed" />
+              <Tab label="Active" value="active" className={styles.tabRoot} />
+              <Tab
+                label="Completed"
+                value="completed"
+                className={styles.tabRoot}
+              />
             </Tabs>
 
             <List>
               {paginatedTodos.map((todo) => (
                 <ListItem
                   key={todo.id}
+                  className={`${styles.todoListItem} ${
+                    todo.completed
+                      ? styles.todoListItemCompleted
+                      : styles.todoListItemActive
+                  }`}
                   sx={{
-                    mb: 1,
-                    borderRadius: 2,
-                    backgroundColor: todo.completed ? "#e3f2fd" : "#ffffff",
-                    boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-                    transition: "0.3s",
                     "&:hover": {
                       backgroundColor: todo.completed ? "#bbdefb" : "#f0f4ff",
                     },
@@ -253,35 +180,34 @@ const TodoApp: React.FC = () => {
                           edge="end"
                           onClick={() => handleComplete(todo.id)}
                           aria-label="complete"
-                          sx={{ color: "#5b86e5" }}
                         >
-                          <CheckCircleIcon />
+                          <CheckCircleIcon className={styles.completeButton} />
                         </IconButton>
                       )}
                       <IconButton
                         edge="end"
                         onClick={() => handleDelete(todo.id)}
                         aria-label="delete"
-                        sx={{ color: "#ff4b2b" }}
                       >
-                        <Delete />
+                        <Delete className={styles.deleteButton} />
                       </IconButton>
                     </Box>
                   }
                 >
                   <ListItemText
                     primary={todo.text}
-                    sx={{
-                      textDecoration: todo.completed ? "line-through" : "none",
-                      color: todo.completed ? "#757575" : "#212121",
-                    }}
+                    className={
+                      todo.completed
+                        ? styles.listItemTextCompleted
+                        : styles.listItemTextActive
+                    }
                   />
                 </ListItem>
               ))}
             </List>
 
             {filteredTodos.length > ITEMS_PER_PAGE && (
-              <Box mt={3} display="flex" justifyContent="center">
+              <Box className={styles.paginationBox}>
                 <Pagination
                   count={Math.ceil(filteredTodos.length / ITEMS_PER_PAGE)}
                   page={page}
